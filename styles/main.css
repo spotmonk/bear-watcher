@@ -11,3 +11,14 @@ input{
 .close {
   text-align: right;
 }
+
+.counter {
+  display: inline;
+}
+.label {
+  font-size: smaller;
+}
+.fa-arrow-up:hover {
+  background-color: darkgreen;
+  color: white;
+}
