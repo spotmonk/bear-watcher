@@ -1,5 +1,5 @@
-import utils from "./helpers/utils.js"
-import bearData from "./helpers/data/bearData.js"
+import utils from "../helpers/utils.js"
+import bearData from "../helpers/data/bearData.js"
 import river from "./river.js"
 
 const printHeader = () =>{
@@ -33,11 +33,11 @@ const addBear = () => {
   let bear = {
     name: document.querySelector("#bearName").value,
     imgURL: document.querySelector("#imgURL").value,
+    bearID: Date.now(),
     Caught: 0,
     Attempted: 0
  }
   bearData.setBears(bear)
-  console.log(bearData.getBears())
   river.printRiver()
 }
 
