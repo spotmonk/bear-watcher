@@ -1,0 +1,9 @@
+body {
+  background-color: darkgreen;
+  text-align: center;
+}
+
+input{
+  background-color: white !important;
+  border-radius: 5px;
+}
