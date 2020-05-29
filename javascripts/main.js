@@ -1,5 +1,5 @@
-import bearForm from './bearForm.js'
-import river from './river.js'
+import bearForm from './components/bearForm.js'
+import river from './components/river.js'
 
 const init = () => {
   bearForm.printHeader()

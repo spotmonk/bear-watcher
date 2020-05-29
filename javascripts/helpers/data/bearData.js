@@ -8,4 +8,9 @@ const getBears = () => {
   return bears;
 };
 
-export default { setBears, getBears };
+const removeBear = (bearID) => bears.splice(findBearIndex(bearID), 1)
+
+
+const findBearIndex = (targetBearID) => bears.findIndex(bear => targetBearID == bear.bearID);
+
+export default { setBears, getBears, removeBear};

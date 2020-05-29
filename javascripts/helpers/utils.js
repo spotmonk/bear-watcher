@@ -6,4 +6,5 @@ const createEventListener = (selector, event,  func) => {
   document.querySelector(selector).addEventListener(event, func)
 }
 
+
 export default {printToDom, createEventListener}
