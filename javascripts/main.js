@@ -3,6 +3,7 @@ import river from './river.js'
 
 const init = () => {
   bearForm.printHeader()
+  
 }
 
 init()

@@ -1,5 +1,6 @@
 import utils from "./helpers/utils.js"
 import bearData from "./helpers/data/bearData.js"
+import river from "./river.js"
 
 const printHeader = () =>{
   let domString =  ``
@@ -29,7 +30,6 @@ const printHeader = () =>{
 const addBear = () => {
   
   event.preventDefault()
-  console.log("addbear Called")
   let bear = {
     name: document.querySelector("#bearName").value,
     imgURL: document.querySelector("#imgURL").value,
@@ -37,7 +37,8 @@ const addBear = () => {
     Attempted: 0
  }
   bearData.setBears(bear)
-  console.log(bear)
+  console.log(bearData.getBears())
+  river.printRiver()
 }
 
 
