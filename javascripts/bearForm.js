@@ -6,7 +6,7 @@ const printHeader = () =>{
   let domString =  ``
   domString += `<h1>Fattest Bears Competition</h1>`
   domString += `<h3>Enter your bear?</h3>`
-  domString += `<form id="bearsForm">
+  domString += `<form id="bearsForm" class="mb-3">
   <div class="form-group row">
   <label for="bearName" class="col-sm-2 col-form-label">Bear Name</label>
   <div class="col-sm-3">
