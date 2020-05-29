@@ -34,8 +34,11 @@ const addBear = () => {
     name: document.querySelector("#bearName").value,
     imgURL: document.querySelector("#imgURL").value,
     bearID: Date.now(),
+    weight: Math.floor(Math.random() * Math.floor(670)) + 130,
     Caught: 0,
-    Attempted: 0
+    Attempted: 0,
+    fishstamps: {}
+    
  }
   bearData.setBears(bear)
   river.printRiver()
