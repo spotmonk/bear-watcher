@@ -10,7 +10,7 @@ const printHeader = () =>{
   <div class="form-group row">
   <label for="bearName" class="col-sm-2 col-form-label">Bear Name</label>
   <div class="col-sm-3">
-    <input type="text" class="form-control-plaintext" id="bearName" required>
+    <input type="text" class="form-control-plaintext" id="bearName" placeholder="Yogi" required>
   </div>
   <label for="imgURL" class="col-sm-2 col-form-label">Bear Name</label>
   <div class="col-sm-3">
@@ -20,7 +20,8 @@ const printHeader = () =>{
 <div class="form-row justify-content-center">
   <button id="submitBtn" type="submit" class="btn btn-primary">Submit</button>
   </div>
-  </form>`
+  </form>
+  <div id="randomize" class="mb-4"></div>`
 
   utils.printToDom("#header",domString)
   utils.createEventListener('#bearsForm','submit', addBear)

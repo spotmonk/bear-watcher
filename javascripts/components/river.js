@@ -6,6 +6,7 @@ const printRiver = () => {
     const bears = bearData.getBears()
     if (bears.length === 0) {
         utils.printToDom("#cards","");
+        utils.printToDom("#randomize","")
         return;
     }
     let domString = `<div class="row justify-content-md-center">`
@@ -22,9 +23,23 @@ const printRiver = () => {
     
     
     utils.printToDom("#cards", domString)})
+    const buttonstring = `<button id="randomSliders" class="btn btn-primary">Randomize Fish Size</button><button id="allfish" class="btn btn-primary">All Attempt!</button>`
+    utils.printToDom("#randomize", buttonstring)
+    utils.createEventListener("#randomSliders","click",randomFishSize)
+    utils.createEventListener("#allfish","click", clickFish)
     bears.forEach(bears => utils.createEventListener(`#close-${bears.bearID}`,'click', removeBear))
     bears.forEach(bears => printWeight(bears.bearID))
     bears.forEach(bears => printFish(bears.bearID))
+}
+
+const randomFishSize = (e) =>{
+    
+    document.querySelectorAll(".fishSlider").forEach((slider)=> slider.value = Math.floor(Math.random() * Math.floor(100) + 1))
+}
+
+const clickFish = (e) => {
+    console.log("called all click")
+    document.querySelectorAll(".fish-btn").forEach( btn => btn.click() )
 }
 
 const removeBear = (e) => {
@@ -33,6 +48,7 @@ const removeBear = (e) => {
     printRiver()
 
 }
+
 
 const printFish = (id) => {
     const bears = bearData.getBears()
@@ -43,11 +59,11 @@ const printFish = (id) => {
     domString += `<div class="">${bear.attempted} <a id="attemptedup${id}" <i class="fas fa-arrow-up"></i></a></div></div>`
     domString += `<div class="w-100"></div>`
     domString += '<div class="row justify-content-around"><div class="label ">Caught:</div><div class="label ">Attempted:</div></div>'
-    domString += `<div><button class="btn btn-success mt-3" id="randomFish${id}">Attempt to Catch a Fish!</button></div>`
+    domString += `<div><button class="fish-btn btn btn-success mt-3" id="randomFish${id}">Attempt to Catch a Fish!</button></div>`
     domString += `<form>
     <div class="form-group">
       <label for="fishSizeRange">Fish Size</label>
-      <input type="range" class="form-control-range" id="fishSizeRange${id}">
+      <input type="range" class="fishSlider form-control-range" id="fishSizeRange${id}">
     </div>
   </form>`
     domString += `<div id="fishpic"><img class="fish" id="fishpic${id}" height="50%" width="50%" src="../components/img/svgfish.svg"></div>`
