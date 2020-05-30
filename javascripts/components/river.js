@@ -1,5 +1,6 @@
 import bearData from '../helpers/data/bearData.js'
 import utils from '../helpers/utils.js'
+import fishing from './fishing.js'
 
 const printRiver = () => {
     const bears = bearData.getBears()
@@ -12,7 +13,7 @@ const printRiver = () => {
     domString += `<div class="mb-4 ml-1 col-md-3"><div class="card w-auto">
     <h5 class="card-header">${bears.name} <a class="close" id="close-${bears.bearID}">X</a> </h5>
     <img src="${bears.imgURL}" class="card-img-top" alt="...">
-    <div id="weight">${bears.weight} lbs</div>
+    <div id="weight${bears.bearID}"></div>
     <div class="m-4" id="fish${bears.bearID}"></div> 
     <div class="card-body">
       
@@ -22,7 +23,8 @@ const printRiver = () => {
     
     utils.printToDom("#cards", domString)})
     bears.forEach(bears => utils.createEventListener(`#close-${bears.bearID}`,'click', removeBear))
-    bears.forEach(bears => printfish(bears.bearID))
+    bears.forEach(bears => printWeight(bears.bearID))
+    bears.forEach(bears => printFish(bears.bearID))
 }
 
 const removeBear = (e) => {
@@ -32,16 +34,16 @@ const removeBear = (e) => {
 
 }
 
-const printfish = (id) => {
+const printFish = (id) => {
     const bears = bearData.getBears()
     const bear = bears[bearData.findBearIndex(id)]
     let domString = `<div class="row">`
     domString += `<div class="col">`
-    domString += `<div class="row justify-content-around"><div class=""> ${bear.Caught} <a id="caughtup${id}"<i class="fas fa-arrow-up"></i></a></div>`
-    domString += `<div class="">${bear.Attempted} <a id="attemptedup${id}" <i class="fas fa-arrow-up"></i></a></div></div>`
+    domString += `<div class="row justify-content-around"><div class=""> ${bear.caught} <a id="caughtup${id}"<i class="fas fa-arrow-up"></i></a></div>`
+    domString += `<div class="">${bear.attempted} <a id="attemptedup${id}" <i class="fas fa-arrow-up"></i></a></div></div>`
     domString += `<div class="w-100"></div>`
     domString += '<div class="row justify-content-around"><div class="label ">Caught:</div><div class="label ">Attempted:</div></div>'
-    domString += `<div><button class="btn btn-success mt-3" id="randomFish">Attempt to Catch a Fish!</button></div>`
+    domString += `<div><button class="btn btn-success mt-3" id="randomFish${id}">Attempt to Catch a Fish!</button></div>`
     domString += `<form>
     <div class="form-group">
       <label for="fishSizeRange">Fish Size</label>
@@ -53,24 +55,30 @@ const printfish = (id) => {
     utils.printToDom("#fish"+id,domString)
     utils.createEventListener(`#caughtup${id}`,'click', caughtup)
     utils.createEventListener(`#attemptedup${id}`,'click', attemptedup)
-    utils.createEventListener('#randomFish','click', randomfish)
+    utils.createEventListener(`#randomFish${id}`,'click', fishing.randomFish)
     utils.createEventListener(`#fishSizeRange${id}`,'input', scalefish)
 }
 
 const caughtup = (e) =>{
     const id = e.target.id.replace("caughtup","");
     bearData.addCaught(bearData.findBearIndex(id))
-    printfish(id)
+    printFish(id)
 }
 const attemptedup = (e) =>{
     const id = e.target.id.replace("attemptedup","");
     bearData.addAttempted(bearData.findBearIndex(id))
-    printfish(id)
+    printFish(id)
 }
 
-const randomfish = (e) =>{
-    console.log(document.querySelector("#fishSizeRange").value)
+const printWeight = (id) => {
+    const bears = bearData.getBears()
+    const index = bearData.findBearIndex(id)
+    const weight = bears[index].weight
+    const domString = `${weight} lbs`
+    utils.printToDom(`#weight${id}`, domString)
+
 }
+
 
 const scalefish = (e) => {
     let id = e.target.id.replace("fishSizeRange","")
@@ -81,4 +89,4 @@ const scalefish = (e) => {
     document.querySelector(`#fishpic${id}`).setAttribute("height", `${multiplier}%`)
 }
 
-export default {printRiver}
+export default {printRiver, printFish, printWeight}
