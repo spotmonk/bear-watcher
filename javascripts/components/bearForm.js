@@ -35,8 +35,8 @@ const addBear = () => {
     imgURL: document.querySelector("#imgURL").value,
     bearID: Date.now(),
     weight: Math.floor(Math.random() * Math.floor(670)) + 130,
-    Caught: 0,
-    Attempted: 0,
+    caught: 0,
+    attempted: 0,
     fishstamps: {}
     
  }
