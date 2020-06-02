@@ -12,7 +12,7 @@ const printRiver = () => {
     let domString = `<div class="row justify-content-md-center">`
     bears.forEach(bears => {
     domString += `<div class="mb-4 ml-1 col-md-3"><div class="card w-auto">
-    <h5 class="card-header">${bears.name} <a class="close" id="close-${bears.bearID}">X</a> </h5>
+    <h5 class="card-header"><div class="award"></div>${bears.name} <a class="close" id="close-${bears.bearID}">X</a> </h5>
     <img src="${bears.imgURL}" class="card-img-top" alt="...">
     <div id="weight${bears.bearID}"></div>
     <div class="m-4" id="fish${bears.bearID}"></div> 
@@ -92,6 +92,7 @@ const printWeight = (id) => {
     const weight = bears[index].weight
     const domString = `${weight} lbs`
     utils.printToDom(`#weight${id}`, domString)
+    winner()
 
 }
 
@@ -104,5 +105,56 @@ const scalefish = (e) => {
     document.querySelector(`#fishpic${id}`).setAttribute("width", `${multiplier}%`)
     document.querySelector(`#fishpic${id}`).setAttribute("height", `${multiplier}%`)
 }
+
+
+const winner = () =>{
+    let bears = bearData.getBears()
+    bears.slice().sort(compareWeight)
+    displayTrophy(bears[0].weight, 1)
+    if (bears[0].weight === bears[1].weight){
+        displayTrophy(bears[1].weight, 1)
+    }
+    else{
+        displayTrophy(bears[1].weight,2)
+    }
+    if (bears[0].weight === bears[2].weight){
+        displayTrophy(bears[2].weight,1)
+    }
+    else if (bears[1].weight === bears[2].weight){
+        displayTrophy(bears[2].weight,2)
+    }
+    else{
+        displayTrophy(bears[2].weight,3)
+    }
+
+
+}
+
+const displayTrophy = (id, rank) => {
+    let node = document.querySelector(`#close-${id}`).closest(".card-header")
+    switch (rank)
+    {
+        case 1:
+            node.childNodes[0].innerHTML = `<img src="../components/img/gold.jpg">`
+            break;
+        case 2:
+            node.childNodes[0].innerHTML = `<img src="../components/img/silver.jpg">`
+            break;
+        case 3:
+            node.childNodes[0].innerHTML = `<img src="../components/img/bronze.jpg">`
+            
+        }
+    
+}
+
+const compareWeight = (a,b) => {
+    if (a.weight > b.weight){
+      return -1
+    }
+    if (a.weight < b.weight) { 
+      return 1
+    }
+    return 0
+  }
 
 export default {printRiver, printFish, printWeight}
