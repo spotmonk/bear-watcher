@@ -45,6 +45,7 @@ const caughtFish = (fishSize,id) => {
   if (catchNum <= totalChance) {
     bearData.addWeight(bearData.findBearIndex(id),weight)
     river.printWeight(id)
+    river.winner()
     return true
 
   }
