@@ -28,13 +28,18 @@ const printRiver = () => {
     utils.createEventListener("#randomSliders","click",randomFishSize)
     utils.createEventListener("#allfish","click", clickFish)
     bears.forEach(bears => utils.createEventListener(`#close-${bears.bearID}`,'click', removeBear))
-    bears.forEach(bears => printWeight(bears.bearID))
     bears.forEach(bears => printFish(bears.bearID))
+    bears.forEach(bears => printWeight(bears.bearID))
+    winner()
 }
 
 const randomFishSize = (e) =>{
     
-    document.querySelectorAll(".fishSlider").forEach((slider)=> slider.value = Math.floor(Math.random() * Math.floor(100) + 1))
+    document.querySelectorAll(".fishSlider").forEach((slider)=> 
+    { slider.value = Math.floor(Math.random() * Math.floor(100) + 1);
+      let event = new Event("input")
+      slider.dispatchEvent(event)  
+    } )
 }
 
 const clickFish = (e) => {
@@ -73,6 +78,7 @@ const printFish = (id) => {
     utils.createEventListener(`#attemptedup${id}`,'click', attemptedup)
     utils.createEventListener(`#randomFish${id}`,'click', fishing.randomFish)
     utils.createEventListener(`#fishSizeRange${id}`,'input', scalefish)
+    utils.createEventListener(`#fishSizeRange${id}`,'change', scalefish)
 }
 
 const caughtup = (e) =>{
@@ -92,7 +98,7 @@ const printWeight = (id) => {
     const weight = bears[index].weight
     const domString = `${weight} lbs`
     utils.printToDom(`#weight${id}`, domString)
-    winner()
+    
 
 }
 
@@ -109,24 +115,32 @@ const scalefish = (e) => {
 
 const winner = () =>{
     let bears = bearData.getBears()
-    bears.slice().sort(compareWeight)
-    displayTrophy(bears[0].weight, 1)
-    if (bears[0].weight === bears[1].weight){
-        displayTrophy(bears[1].weight, 1)
+    bears = bears.slice().sort(compareWeight)
+    bears.forEach((bear) => {
+        let node = document.querySelector(`#close-${bear.bearID}`).closest(".card-header");
+        node.childNodes[0].innerHTML = ""
+    })
+    displayTrophy(bears[0].bearID, 1)
+    
+    if (bears.length > 1 && bears[0].weight === bears[1].weight){
+        displayTrophy(bears[1].bearID, 1)}
+    if (bears.length > 1 && bears[0].weight !== bears[1].weight){
+        displayTrophy(bears[1].bearID,2)
     }
-    else{
-        displayTrophy(bears[1].weight,2)
+    if (bears.length > 2 && bears[0].weight === bears[2].weight){
+        displayTrophy(bears[2].bearID,1)
     }
-    if (bears[0].weight === bears[2].weight){
-        displayTrophy(bears[2].weight,1)
+    if (bears.length >= 3 && bears[1].weight === bears[2].weight){
+        displayTrophy(bears[2].bearID,2)
     }
-    else if (bears[1].weight === bears[2].weight){
-        displayTrophy(bears[2].weight,2)
+    if (bears.length >= 3 && bears[1].weight !== bears[2].weight){
+        displayTrophy(bears[2].bearID,3)
+    
+    if (bears.length > 3 && bears[3].weight === bears[2].weight){
+        displayTrophy(bears[4].bearID,3)
     }
-    else{
-        displayTrophy(bears[2].weight,3)
-    }
-
+    
+}
 
 }
 
@@ -157,4 +171,4 @@ const compareWeight = (a,b) => {
     return 0
   }
 
-export default {printRiver, printFish, printWeight}
+export default {printRiver, printFish, printWeight, winner}
