@@ -16,5 +16,5 @@ There are also buttons that assign random fish size for each bear to catch and a
 
 ## View Project
 
-* Clone the repository `$ git clone git@github.com:spotmonk/pet-adoption.git`
+* Clone the repository `$ git clone git@github.com:spotmonk/bear-watcher.git`
 * Run any HTTP server. My favorite is installed with `$ npm install http-server` and run with a `$ hs`
